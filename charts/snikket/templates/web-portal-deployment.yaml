@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: snikket
+    component: web-portal
+  name: snikket-web-portal
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: snikket
+      component: web-portal
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: snikket
+        component: web-portal
+    spec:
+      containers:
+        - env:
+            - name: SNIKKET_TWEAK_PORTAL_INTERNAL_HTTP_INTERFACE
+              value: 0.0.0.0
+            - name: SNIKKET_WEB_PROSODY_ENDPOINT
+              value: http://snikket-server-service.default.svc.cluster.local:5280
+            - name: SNIKKET_WEB_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  key: secret_key
+                  name: snikket-web-portal-secret
+                  optional: false
+          envFrom:
+            - configMapRef:
+                name: snikket-settings
+                optional: false
+          image: |-
+            {{ default "docker.io/snikket" .Values.image.repo }}/snikket-web-portal:{{ default .Chart.AppVersion .Values.image.tag }}
+          name: snikket-web-portal
+          ports:
+            - containerPort: 5765
+              name: web-portal-http
+          readinessProbe:
+            httpGet:
+              port: 5765
+              path: /_health

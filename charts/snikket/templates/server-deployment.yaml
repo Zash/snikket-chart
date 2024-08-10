@@ -1,0 +1,69 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: snikket
+    component: server
+  name: snikket-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: snikket
+      component: server
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: snikket
+        component: server
+    spec:
+      containers:
+        - env:
+            - name: SNIKKET_TWEAK_INTERNAL_HTTP_INTERFACE
+              value: 0.0.0.0
+          envFrom:
+            - configMapRef:
+                name: snikket-settings
+                optional: false
+          image: |-
+            {{ default "docker.io/snikket" .Values.image.repo }}/snikket-server:{{ default .Chart.AppVersion .Values.image.tag }}
+          name: snikket-server
+          ports:
+            - containerPort: 5222
+              hostPort: 5222
+              name: xmpp-client
+            - containerPort: 5223
+              hostPort: 5223
+              name: xmpps-client
+            - containerPort: 5269
+              hostPort: 5269
+              name: xmpp-server
+            - containerPort: 5270
+              hostPort: 5270
+              name: xmpps-server
+            - containerPort: 5280
+              name: xmppd-http
+          volumeMounts:
+            - mountPath: /snikket
+              name: snikket-data
+            - mountPath: /snikket/letsencrypt/live
+              name: tls-certs
+          readinessProbe:
+            httpGet:
+              port: 5280
+              path: /host_status_check
+      volumes:
+        - name: tls-certs
+          secret:
+            items:
+              - key: tls.crt
+                path: {{ .Values.domain }}/fullchain.pem
+              - key: tls.key
+                path: {{ .Values.domain }}/privkey.pem
+            optional: false
+            secretName: snikket-tls
+        - name: snikket-data
+          persistentVolumeClaim:
+            claimName: snikket-data

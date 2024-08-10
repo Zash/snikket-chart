@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: snikket
+    component: server
+  name: snikket-server-service
+  namespace: default
+spec:
+  ports:
+    - port: 5280
+      protocol: TCP
+      targetPort: 5280
+  selector:
+    app: snikket
+    component: server
+  type: ClusterIP

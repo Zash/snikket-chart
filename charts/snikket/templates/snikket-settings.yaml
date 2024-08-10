@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: snikket-settings
+data:
+  SNIKKET_DOMAIN: |-
+    {{ .Values.domain }}
+  SNIKKET_ADMIN_EMAIL: |-
+    {{ .Values.adminEmail }}
+  SNIKKET_TWEAK_TURNSERVER: "0"
+  SNIKKET_TWEAK_STORAGE: "sqlite"
+  SNIKKET_UPLOAD_STORAGE_GB: "1"
+  SNIKKET_TWEAK_PROMETHEUS: "1"

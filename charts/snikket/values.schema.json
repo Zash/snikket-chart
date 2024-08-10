@@ -1,0 +1,62 @@
+{
+  "title": "Snikket Helm Chart Values",
+  "description": "Settings for the Snikket Helm Chart",
+  "type": "object",
+  "required": [
+    "domain",
+    "adminEmail",
+    "portalSecret",
+    "image"
+  ],
+  "properties": {
+    "domain": {
+      "title": "Snikket Domain",
+      "description": "Main domain name of your Snikket instance.",
+      "type": "string",
+      "format": "hostname",
+      "examples": [
+        "chat.example.org"
+      ]
+    },
+    "adminEmail": {
+      "title": "Administrator Email",
+      "type": "string",
+      "format": "email"
+    },
+    "issuer": {
+      "title": "Certificate Issuer Reference",
+      "examples": [
+        "letsencrypt-prod"
+      ]
+    },
+    "portalSecret": {
+      "title": "Portal Secret Key",
+      "description": "Used to guard forms and sessions. Rotating breaks sessions.",
+      "type": "string",
+      "minLength": 32
+    },
+    "image": {
+      "type": "object",
+      "properties": {
+        "repo": {
+          "title": "Container Repository",
+          "description": "Container repository to pull images from.",
+          "type": "string",
+          "default": "docker.io/snikket"
+        },
+        "tag": {
+          "title": "Container Image Tag",
+          "type": "string",
+          "examples": [
+            "beta",
+            "dev",
+            "stable"
+          ],
+          "default": "dev"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

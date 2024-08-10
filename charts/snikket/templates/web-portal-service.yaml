@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: snikket
+    component: web-portal
+  name: snikket-web-portal-service
+  namespace: default
+spec:
+  ports:
+  - port: 5765
+    protocol: TCP
+    targetPort: 5765
+  selector:
+    app: snikket
+    component: web-portal
+  type: ClusterIP

@@ -1,0 +1,77 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: snikket
+  annotations:
+    cert-manager.io/cluster-issuer: {{ .Values.issuer }}
+spec:
+  tls:
+    - hosts:
+        - {{ .Values.domain }}
+        - groups.{{ .Values.domain }}
+        - share.{{ .Values.domain }}
+      secretName: snikket-tls
+  rules:
+    - host: {{ .Values.domain }}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: snikket-web-portal-service
+                port:
+                  number: 5765
+          - path: /admin_api
+            pathType: Prefix
+            backend:
+              service:
+                name: snikket-server-service
+                port:
+                  number: 5280
+          - path: /invites_bootstrap
+            pathType: Prefix
+            backend:
+              service:
+                name: snikket-server-service
+                port:
+                  number: 5280
+          - path: /http-bind
+            pathType: Prefix
+            backend:
+              service:
+                name: snikket-server-service
+                port:
+                  number: 5280
+          - path: /xmpp-websocket
+            pathType: Prefix
+            backend:
+              service:
+                name: snikket-server-service
+                port:
+                  number: 5280
+          - path: /.well-known/host-meta
+            pathType: Exact
+            backend:
+              service:
+                name: snikket-server-service
+                port:
+                  number: 5280
+          - path: /.well-known/host-meta.json
+            pathType: Exact
+            backend:
+              service:
+                name: snikket-server-service
+                port:
+                  number: 5280
+    - host: share.{{ .Values.domain }}
+      # This one will likely need more tweaks for upload sizes
+      http:
+        paths:
+          - path: /upload/
+            pathType: Prefix
+            backend:
+              service:
+                name: snikket-server-service
+                port:
+                  number: 5280

@@ -15,3 +15,7 @@ helm install snikket charts/snikket \
 
 - [Ingress NGINX](https://kubernetes.github.io/ingress-nginx/)
 - [cert-manager](https://cert-manager.io/)
+
+## Notes
+
+- STUN / TURN disabled

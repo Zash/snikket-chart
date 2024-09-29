@@ -59,9 +59,11 @@ spec:
           secret:
             items:
               - key: tls.crt
-                path: {{ .Values.domain }}/fullchain.pem
+                path: |-
+                  {{ .Values.domain }}/fullchain.pem
               - key: tls.key
-                path: {{ .Values.domain }}/privkey.pem
+                path: |-
+                  {{ .Values.domain }}/privkey.pem
             optional: false
             secretName: snikket-tls
         - name: snikket-data

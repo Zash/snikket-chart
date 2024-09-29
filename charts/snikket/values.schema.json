@@ -21,13 +21,15 @@
     "adminEmail": {
       "title": "Administrator Email",
       "type": "string",
-      "format": "email"
+      "format": "email",
+      "description": "An email address where the admin can be contacted.\nAlso used to register your Let's Encrypt account to obtain certificates.\n"
     },
     "issuer": {
       "title": "Certificate Issuer Reference",
       "examples": [
         "letsencrypt-prod"
-      ]
+      ],
+      "description": "Reference to a [cert-manager](https://cert-manager.io/) ClusterIssuer from which to acquire certificates."
     },
     "portalSecret": {
       "title": "Portal Secret Key",

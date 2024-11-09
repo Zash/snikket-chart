@@ -3,16 +3,21 @@ kind: Ingress
 metadata:
   name: snikket
   annotations:
-    cert-manager.io/cluster-issuer: {{ .Values.issuer }}
+    cert-manager.io/cluster-issuer: |-
+      {{ .Values.issuer }}
 spec:
   tls:
     - hosts:
-        - {{ .Values.domain }}
-        - groups.{{ .Values.domain }}
-        - share.{{ .Values.domain }}
+        - |-
+          {{ .Values.domain }}
+        - |-
+          groups.{{ .Values.domain }}
+        - |-
+          share.{{ .Values.domain }}
       secretName: snikket-tls
   rules:
-    - host: {{ .Values.domain }}
+    - host: |-
+        {{ .Values.domain }}
       http:
         paths:
           - path: /
@@ -64,7 +69,8 @@ spec:
                 name: snikket-server-service
                 port:
                   number: 5280
-    - host: share.{{ .Values.domain }}
+    - host: |-
+        share.{{ .Values.domain }}
       # This one will likely need more tweaks for upload sizes
       http:
         paths:

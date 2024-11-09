@@ -58,6 +58,16 @@
         }
       },
       "additionalProperties": false
+    },
+    "storage": {
+      "type": "string",
+      "default": "files",
+      "enum": [
+        "files",
+        "sqlite"
+      ],
+      "title": "Storage method",
+      "description": "Whether to use a simple file based database (`files`) or SQLite3 (`sqlite`). Automatically migrates existing data if changed."
     }
   },
   "additionalProperties": false

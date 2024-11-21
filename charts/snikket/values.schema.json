@@ -59,6 +59,12 @@
       },
       "additionalProperties": false
     },
+    "webDiscovery": {
+      "title": "Enable Discovery via XEP-0156 for Web clients",
+      "description": "Whether [XEP-0156](https://xmpp.org/extensions/xep-0156.html) routes are enabled, as needed by web clients in order to locate and connect to the WebSocket or BOSH endpoints. Note that this may require setting the Ingress Nginx setting [`\"strict-validate-path-type\"`](https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/#strict-validate-path-type) to `\"false\"` due to [this bug](https://github.com/kubernetes/ingress-nginx/issues/11176).",
+      "type": "boolean",
+      "default": true
+    },
     "storage": {
       "type": "string",
       "default": "files",

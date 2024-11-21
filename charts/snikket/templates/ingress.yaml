@@ -55,6 +55,7 @@ spec:
                 name: snikket-server-service
                 port:
                   number: 5280
+          # {{ if default true .Values.webDiscovery -}}
           - path: /.well-known/host-meta
             pathType: Exact
             backend:
@@ -69,6 +70,7 @@ spec:
                 name: snikket-server-service
                 port:
                   number: 5280
+          # {{ end }}
     - host: |-
         share.{{ .Values.domain }}
       # This one will likely need more tweaks for upload sizes

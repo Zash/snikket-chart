@@ -18,6 +18,9 @@ spec:
       labels:
         app: snikket
         component: server
+      annotations:
+        checksum/config: |-
+          {{ include (print $.Template.BasePath "/snikket-settings.yaml") . | sha256sum }}
     spec:
       containers:
         - env:

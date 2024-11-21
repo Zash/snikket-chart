@@ -11,4 +11,9 @@ data:
   SNIKKET_TWEAK_STORAGE: |-
     {{ default "files" .Values.storage }}
   SNIKKET_UPLOAD_STORAGE_GB: "1"
-  SNIKKET_TWEAK_PROMETHEUS: "1"
+  SNIKKET_TWEAK_PROMETHEUS: |-
+    {{ if default false .Values.monitoring -}}
+    1
+    {{- else -}}
+    0
+    {{- end -}}

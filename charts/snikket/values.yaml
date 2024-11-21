@@ -5,4 +5,4 @@ portalSecret: set-me
 image:
   repo: docker.io/snikket
   tag: dev # E.g. dev, beta, stable, stable.20240722
-
+monitoring: false

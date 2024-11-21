@@ -74,6 +74,12 @@
       ],
       "title": "Storage method",
       "description": "Whether to use a simple file based database (`files`) or SQLite3 (`sqlite`). Automatically migrates existing data if changed."
+    },
+    "monitoring": {
+      "title": "Enable Monitoring",
+      "description": "Whether to enable the OpenMetrics endpoints and a corresponding ServiceMonitoring. Requires Prometheus Operator.",
+      "type": "boolean",
+      "default": false
     }
   },
   "additionalProperties": false

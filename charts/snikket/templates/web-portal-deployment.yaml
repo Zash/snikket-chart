@@ -21,6 +21,8 @@ spec:
       annotations:
         checksum/config: |-
           {{ include (print $.Template.BasePath "/snikket-settings.yaml") . | sha256sum }}
+        checksum/secret: |-
+          {{ .Values.portalSecret | sha256sum }}
     spec:
       containers:
         - env:

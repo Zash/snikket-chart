@@ -57,14 +57,14 @@ spec:
                   number: 5280
           # {{ if default true .Values.webDiscovery -}}
           - path: /.well-known/host-meta
-            pathType: Exact
+            pathType: ImplementationSpecific
             backend:
               service:
                 name: snikket-server-service
                 port:
                   number: 5280
           - path: /.well-known/host-meta.json
-            pathType: Exact
+            pathType: ImplementationSpecific
             backend:
               service:
                 name: snikket-server-service
